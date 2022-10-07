@@ -21,8 +21,6 @@ export namespace AnimeService {
    */
   export async function getAnime({ limit, page, ordering, type, search }: PaginationConfig): Promise<Pagination<Anime>> {
     const params = PaginationMapper.toDto({ limit, page, ordering, type, search });
-
-    console.log(params);
     const animeResponse = await api.get<PaginationDto<AnimeDto>>(
       `anime/anime/`, { params },
     );

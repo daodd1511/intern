@@ -1,7 +1,7 @@
 import { Option } from './interfaces';
 
 /** Initial page or first page. */
-export const FIRST_PAGE = 1;
+export const FIRST_PAGE = 0;
 
 /** Default sort value. */
 export const DEFAULT_SORT = '';

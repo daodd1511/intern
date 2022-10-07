@@ -17,8 +17,9 @@ const HALF_NUMBER_OF_PAGES = Math.floor(NUMBER_OF_PAGES / 2);
  * @param displayPages Pages number  to display.
  */
 export async function renderPagination(displayPages: number): Promise<void> {
-  const currentPage = await StorageService.get<number>(PaginationLocalStorage.active);
-  assertNonNull(currentPage);
+  const activePage = await StorageService.get<number>(PaginationLocalStorage.active);
+  assertNonNull(activePage);
+  const currentPage = activePage + 1;
   const wrapper = document.querySelector<HTMLDivElement>('.pagination');
   assertNonNull(wrapper);
   wrapper.innerHTML = ``;
@@ -41,8 +42,8 @@ export async function renderPagination(displayPages: number): Promise<void> {
   for (let page = firstDisplayPage; page <= lastDisplayPage; page++) {
     wrapper.innerHTML += `
     <li>
-      <button index=${page}  class="btn waves-effect pagination__button ${page === currentPage ? 'pagination__button-active' : ''}">
-        ${page}
+      <button index=${page}  class="btn waves-effect pagination__button ${page + 1 === currentPage ? 'pagination__button-active' : ''}">
+        ${page + 1}
       </button>
     </li>`;
   }
