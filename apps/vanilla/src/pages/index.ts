@@ -3,8 +3,6 @@ import { PaginationConfig } from '@js-camp/core/interfaces/pagination';
 import { AnimeService } from '../services/animeService';
 import { LIMIT, FIRST_PAGE, DEFAULT_SORT, DEFAULT_SEARCH, DEFAULT_TYPE } from '../scripts/variables';
 
-import { AuthService } from '../services/authService';
-
 import { renderTable } from '../scripts/animeTable';
 import { renderSortOptions } from '../scripts/sort';
 import { renderFilterOptions } from '../scripts/filter';
@@ -18,7 +16,6 @@ import { StorageService } from '../services/storageService';
 window.addEventListener('load', async(): Promise<void> => {
   await Navbar.render();
   initHomepage();
-  await AuthService.navigateToLoginIfNotAuthenticated();
 });
 const initHomepage = async(): Promise<void> => {
   resetTableState();
