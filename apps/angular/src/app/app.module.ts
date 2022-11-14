@@ -6,6 +6,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { HttpApiKeyInterceptor, AuthInterceptor } from '../core/interceptors/';
 
+import { RefreshInterceptor } from '../core/interceptors/refresh.interceptor';
+
 import { SharedModule } from './../shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +31,11 @@ import { AppComponent } from './app.component';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RefreshInterceptor,
       multi: true,
     },
   ],
