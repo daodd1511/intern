@@ -29,13 +29,19 @@
 </div>
 
 <div
-  *ngIf="(animeList$ | async) as animeList; else Loading"
+  *ngIf="(animeList$ | async) as animeList"
   class="anime-table"
 >
-  <ng-container *ngIf="sort$ | async as sort; else Loading">
+  <div *ngIf="animeList.isLoading">
+    <camp-spinner></camp-spinner>
+  </div>
+  <div *ngIf="animeList.error">
+    {{animeList.error.detail}}
+  </div>
+  <ng-container *ngIf="animeList.data">
     <table
-      *ngIf="(isLoading$ | async) === false; else Loading"
-      [dataSource]="animeList"
+      *ngIf="sort$ | async as sort"
+      [dataSource]="animeList.data.results"
       mat-table
       matSort
       (matSortChange)="onSortChange($event)"
@@ -92,18 +98,15 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let anime; columns: displayedColumns" (click)="openDetailPage(anime)"></tr>
     </table>
+    <mat-paginator
+      showFirstLastButtons
+      [length]="animeList.data.count"
+      [pageSize]="pageSize"
+      [pageIndex]="(currentPage$ | async)!"
+      (page)="onPaginatorChange($event)"
+      aria-label="Select pages"
+      class="anime-table__paginator"
+    >
+    </mat-paginator>
   </ng-container>
-  <mat-paginator
-    showFirstLastButtons
-    [length]="length$ | async"
-    [pageSize]="pageSize"
-    [pageIndex]="(currentPage$ | async)!"
-    (page)="onPaginatorChange($event)"
-    aria-label="Select pages"
-    class="anime-table__paginator"
-  >
-  </mat-paginator>
 </div>
-<ng-template #Loading>
-  <camp-spinner></camp-spinner>
-</ng-template>
