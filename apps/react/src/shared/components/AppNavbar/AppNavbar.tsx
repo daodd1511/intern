@@ -1,4 +1,5 @@
 import { logout } from '@js-camp/react/store/auth/dispatchers';
+import { selectIsAuthorized } from '@js-camp/react/store/auth/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { selectUser } from '@js-camp/react/store/user/selectors';
 import {
@@ -20,6 +21,7 @@ import styles from './AppNavbar.module.css';
 const AppNavbarComponent: FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
+  const isAuthorized = useAppSelector(selectIsAuthorized);
   const [anchorElementUser, setAnchorElementUser] = useState<null | HTMLElement>(null);
   const location = useLocation();
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
@@ -47,7 +49,7 @@ const AppNavbarComponent: FC = () => {
               Anime
             </Typography>
           </Link>
-          {user !== null ? (
+          {user !== null || !isAuthorized ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
