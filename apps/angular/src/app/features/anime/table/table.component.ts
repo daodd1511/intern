@@ -181,7 +181,7 @@ export class TableComponent implements OnInit {
           field: sort.field,
           direction: sort.direction,
           search,
-          type,
+          type: type.toString(),
         };
         this.router.navigate([], {
           queryParams: queryParamsForUrl,
